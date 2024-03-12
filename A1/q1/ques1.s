@@ -3,7 +3,7 @@
 find_lonely:
     movq (%rdi), %rax 
     .L2:
-        addq $4, %rdi
+        addq $8, %rdi
         movq (%rdi),%r10
         xor %r10,%rax
         subq $1, %rsi
