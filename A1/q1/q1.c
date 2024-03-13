@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-extern long long int find_lonely(long long int* arr,int n);
+long long int find_lonely(long long int* arr,int n);
 
 
 int main(){

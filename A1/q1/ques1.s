@@ -1,13 +1,15 @@
 .global find_lonely
 
 find_lonely:
-    movq (%rdi), %rax 
-    .L2:
-        addq $8, %rdi
-        movq (%rdi),%r10
-        xor %r10,%rax
-        subq $1, %rsi
-        cmpq $0, %rsi 
-        jg .L2 
-        ret
+    movq $0, %rax
     
+.L2:
+    cmpq $0, %rsi
+    je .end
+    xor (%rdi), %rax
+    add $8, %rdi
+    sub $1, %rsi
+    jmp .L2
+    
+.end:
+    ret
