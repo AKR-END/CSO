@@ -37,20 +37,6 @@ postfix:
   jmp postfix
 
 .minus:
-  movq %rdi, %r10
-  addq $1, %r10
-  movzbq (%r10), %r11
-  cmpq $32, %r11
-  je .solve
-  subq $48, %r11
-  movq $0, %r12
-  subq %r11, %r12
-  pushq %r12
-  addq $2, %rdi
-  subq $2, %rsi
-  jmp postfix
-
-.solve:
   popq %r10
   popq %r11
   subq %r10, %r11
@@ -58,6 +44,7 @@ postfix:
   addq $1, %rdi
   subq $1, %rsi
   jmp postfix
+
 
 .multi:
   popq %r10
