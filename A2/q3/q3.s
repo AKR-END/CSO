@@ -56,10 +56,10 @@ postfix:
   jmp postfix
   
 .div:
+  .div:
   popq %r10
-  popq %r11
-  movq %r11,%rax
-  movq $0,%rdx
+  popq %rax
+  cqto
   idivq %r10
   pushq %rax
   addq $1, %rdi
