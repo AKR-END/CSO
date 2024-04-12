@@ -6,7 +6,7 @@
 
 comb:
     cmpq $0, %rdi
-    je .end
+    je .endb
     cmpq %rsi, %rdi
     je .endb
 
