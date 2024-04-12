@@ -4,13 +4,13 @@
 # long long int n stored in %rdi, long long int r stored in %rsi
 
 comb:
-    cmpq $0,%rsi
+ cmpq $0,%rsi
     je end_factorial
 
 factorial:
     cmpq $0,%rsi
     je end_factorial
-
+    
     pushq %rdi
     pushq %rsi
 
