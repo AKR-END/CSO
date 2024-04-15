@@ -1,57 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define int long long
 
 
+long long max_subarray(long long* arr, long long n, long long l, long long r,long long* deque, long long* pre);
 
+int main(){
+    long long n, l, r;
+    scanf("%lld %lld %lld", &n, &l, &r);
 
-// int_fast8_t max_sub(int_fast8_t *arr, int_fast8_t n, int_fast8_t l, int_fast8_t r);
+    long long* arr = (long long*)malloc(n*sizeof(long long));
+    long long* deque = (long long*)malloc(n*sizeof(long long));
+    long long* pre = (long long*)malloc(n+1*sizeof(long long));
 
-signed main(){
-    long long n,l,r;
-    scanf("%lld %lld %lld",&n,&l,&r);
-
-    int* arr = malloc(sizeof(int)*n);
-    int* prefix_sum = malloc(sizeof(int)*n);
-
-    int sum = 0;
-
-    for(int i = 0; i<n ; i++){
-        scanf("%lld",&arr[i]);
-        sum+=arr[i];
-        prefix_sum[i] = sum;
+    for(long long i=0; i<n; i++){
+        scanf("%lld", &arr[i]);
     }
 
-    
-   
-    int start = 0;
-    int min = arr[0];
-    int max = prefix_sum[l-1] - prefix_sum[0];
-
-    for()
-
-    int size = l;
-    int left = start;
-    int right = start+l - 1;
-
-
-    int temp = max;
-    while(size<r){
-        if(left - 1 >= 0 && right + 1 < n ){
-            if(arr[left - 1] > arr[right - 1]){
-                temp+=arr[--left];
-            }else{
-                temp+=arr[++right];
-            }
-        }else if(left - 1 > 0){
-            temp+=arr[--left];
-        }else if(right + 1 < n){
-            temp+=arr[--right];
-        }
-        size++;
-
-        if(max<temp) max = temp;
-    }
-
-    printf("%lld",max);
+    printf("%lld\n", max_subarray(arr, n, l, r, deque, pre));
+    return 0;
 }
+
+
+or(int i=1;i<=n;i++){
+        pre[i]=pre[i-1]+a[i];
+    }
+
+    int deque[n+1];
+    int deque_l=0;
+    int deque_r=0;
+
+    int ans = -1e8;
+
+    for(int i=l;i<=n;i++){
+
+        while(deque_r != deque_l && pre[i-l] < pre[deque[deque_r-1]]) 
+            deque_r--;
+        deque[deque_r] = i-l;
+        deque_r++;
+        if(deque[deque_l] < i-r)
+            deque_l++;
+
+        ans = max(ans,pre[i]-pre[deque[deque_l]]);
+    }
