@@ -1,11 +1,13 @@
 .global bs
 .text
 
-# %rdi stores &arr[0], %rsi stores targ and %rdx stores &iterations
+# %di stores &arr[0], %rsi stores targ and %rdx stores &iterations
 
 bs:
     movq $0, %r8
     movq $31, %r9
+
+    movswq %si, %rbx
 
     movq $-1, %rax
     movq $0, %r10
@@ -20,9 +22,9 @@ bs:
     addq %r9, %r11
     sarq $1, %r11
 
-    movq (%rdi,%r11,8), %r12
+    movswq (%rdi,%r11,2), %r12
 
-    cmpq %r12, %rsi
+    cmpq %r12, %rbx
     je .rdec
     jl .rdec2
     jg .linc
@@ -43,8 +45,8 @@ bs:
 
 .end:
     movq %r10, (%rdx)
-    movq (%rdi,%r8,8), %r12
-    cmpq %r12, %rsi
+    movswq (%rdi,%r8,2), %r12
+    cmpq %r12, %rbx
     je .found
     movq $-1, %rax
     ret
