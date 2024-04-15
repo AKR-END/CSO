@@ -1,42 +1,54 @@
 .global bs
 .text
 
-# %rdi stores &arr[0] ,%rsi stores target and %rdx stores &iterations
+# %rdi stores &arr[0], %rsi stores targ and %rdx stores &iterations
 
 bs:
+    movq $0, %r8
     movq $31, %r9
+
+    movq $-1, %rax
     movq $0, %r10
 
-.start:
-    cmpq %r10,%r9
+.while:
+    cmpq %r8, %r9
     jle .end
-    movq (%rdx), %r14
-    addq $1, %r14
-    movq %r10, %r11
+    
+    incq %r10
+
+    movq %r8, %r11
     addq %r9, %r11
     sarq $1, %r11
-    movq %r11, %r15
-    movq (%rdi,%r15,8), %r13
-    cmpq %r13, %rsi
+
+    movq (%rdi,%r11,8), %r12
+
+    cmpq %r12, %rsi
     je .rdec
-    jg .rdec2
-    jl .linc
-    
-.rdec:  
+    jl .rdec2
+    jg .linc
+
+.rdec:
     movq %r11, %r9
-    jmp .start
+    jmp .while
 
 .rdec2:
     movq %r11, %r9
     decq %r9
-    jmp .start
+    jmp .while
 
 .linc:
-    movq %r11, %r10
-    incq %r10
-    jmp .start
+    movq %r11, %r8
+    incq %r8
+    jmp .while
 
 .end:
-    movq %r10,%rax
+    movq %r10, (%rdx)
+    movq (%rdi,%r8,8), %r12
+    cmpq %r12, %rsi
+    je .found
+    movq $-1, %rax
     ret
 
+.found:
+    movq %r8, %rax
+    ret
